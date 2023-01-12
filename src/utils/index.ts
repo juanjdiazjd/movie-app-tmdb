@@ -1,6 +1,6 @@
 import { RootStackParams } from "../navigation";
 
-enum Screens {
+export enum Screens {
     Home = "HomeScreen",
     Profile = "ProfileScreen",
     Search = "SearchScreen"

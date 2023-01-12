@@ -1,63 +1,48 @@
-import React, { useContext, useEffect } from 'react'
-import { Animated, StyleSheet, View } from 'react-native'
-import LinearGradient from 'react-native-linear-gradient'
-import { GradientContext } from '../../core/context/GradientContext'
-import { useFade } from '../../hooks/useFade'
-
-
+import React, { useContext, useEffect } from 'react';
+import { Animated, StyleSheet, View } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
+import { GradientContext } from '../../core/context/GradientContext';
+import { useFade } from '../../hooks/useFade';
 
 interface Props {
-    children: JSX.Element | JSX.Element[]
+  children: JSX.Element | JSX.Element[];
 }
 
+export const GradientBackground = ({ children }: Props) => {
+  const { colors, prevColors, setPrevMainColors } = useContext(GradientContext);
 
-
-export const GradientBackground = ({ children }: Props ) => {
-  
-  const { colors, prevColors, setPrevMainColors } = useContext(GradientContext)
-  
-  const { opacity, fadeIn, fadeOut } = useFade()
+  const { opacity, fadeIn, fadeOut } = useFade();
 
   useEffect(() => {
-    fadeIn( ()  => {
-      setPrevMainColors( colors );
+    fadeIn(() => {
+      setPrevMainColors(colors);
       fadeOut(0);
-    })
-  
-    
-  }, [colors])
-  
+    });
+  }, [colors]);
 
   return (
+    <View style={{ flex: 1 }}>
+      <LinearGradient
+        colors={[prevColors.primary, prevColors.secondary, 'black']}
+        style={{ ...StyleSheet.absoluteFillObject }}
+        start={{ x: 0.1, y: 0.1 }}
+        end={{ x: 0.5, y: 0.7 }}
+      />
 
-
-    <View style={{flex: 1 }}>
+      <Animated.View
+        style={{
+          ...StyleSheet.absoluteFillObject,
+          opacity,
+        }}
+      >
         <LinearGradient
-            colors={[ prevColors.primary, prevColors.secondary, 'black' ]}
-            style={{ ...StyleSheet.absoluteFillObject }}
-            start={{ x: 0.1, y: 0.1 }}
-            end={{  x: 0.5, y: 0.7}}
+          colors={[colors.primary, colors.secondary, 'black']}
+          style={{ ...StyleSheet.absoluteFillObject }}
+          start={{ x: 0.1, y: 0.1 }}
+          end={{ x: 0.5, y: 0.7 }}
         />
-
-        <Animated.View
-            style={{ 
-              ...StyleSheet.absoluteFillObject,
-              opacity
-
-            }}
-        >
-           <LinearGradient
-            colors={[ colors.primary, colors.secondary, 'black' ]}
-            style={{ ...StyleSheet.absoluteFillObject }}
-            start={{ x: 0.1, y: 0.1 }}
-            end={{  x: 0.5, y: 0.7}}
-        />   
-
-        </Animated.View>
-
-
-
-        { children }
+      </Animated.View>
+      {children}
     </View>
-  )
-}
+  );
+};

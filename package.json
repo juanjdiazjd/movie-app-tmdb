@@ -9,7 +9,8 @@
     "start": "react-native start",
     "lint": "eslint --ext .js,.jsx,.mjs,.ts,.tsx .",
     "lint:fix": "yarn lint --fix",
-    "compile": "tsc -p ."
+    "compile": "tsc -p .",
+    "test": "jest"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.17.11",
@@ -62,6 +63,7 @@
   "devDependencies": {
     "@babel/core": "^7.20.12",
     "@babel/runtime": "^7.20.7",
+    "@types/jest": "^29.2.5",
     "@types/lodash": "^4.14.149",
     "@types/node": "^13.5.0",
     "@types/react": "^18.0.26",
@@ -94,6 +96,20 @@
     }
   },
   "jest": {
-    "preset": "react-native"
+    "preset": "react-native",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ],
+    "transform": {
+      "^.+\\.[t|j]sx?$": "babel-jest"
+    },
+    "transformIgnorePatterns": [
+      "node_modules/(?!((jest-)?react-native(-.*)?|@react-native(-community)?|@react-native|react-native|@react-native-masked-view|react-native-localization|react-native-gesture-handler|react-native-*|react-native-.+|react-navigation|@react-navigation/.*|react-navigation-stack|react-native-localization|@react-native-community/.+)/)"
+    ]
   }
 }
